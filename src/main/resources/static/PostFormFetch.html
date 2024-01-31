@@ -91,6 +91,28 @@
                 })
                 .catch(afficheMessage);
         }
+
+        function supprimerCategorie(code){
+            fetch("api/categories/" + code,{
+                method : "delete"
+            })
+            .then(
+                response => {
+                    // On vérifie le code de retour de la requête
+                    switch (response.status) {
+                        case 200: // Created: ça s'est bien passé
+                            // On recharge la liste des catégories
+                            chargeCategories();
+                            break;
+                        case 409: // Conflict: doublon dans les noms
+                            afficheMessage("Impossible de supprimer cette catégorie");
+                            break;
+                    }
+                })
+                .catch(afficheMessage)           
+        }
+
+
     </script>
 </head>
 
